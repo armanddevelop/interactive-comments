@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { stateComments } from "../../types/types";
 import dataComments from "../data/data.json";
-import { onGetComments } from "../Store/Comments/comments";
+import { onGetComments, onChangeScore } from "../Store/Comments/comments";
 
 export const useCardsContent = () => {
   const { currentUser, comments } = useSelector(
@@ -12,6 +12,8 @@ export const useCardsContent = () => {
   const getComments = () => {
     dispatch(onGetComments(dataComments));
   };
-
-  return { currentUser, comments, getComments };
+  const changeScore = (votes: any) => {
+    dispatch(onChangeScore(votes));
+  };
+  return { currentUser, comments, getComments, changeScore };
 };

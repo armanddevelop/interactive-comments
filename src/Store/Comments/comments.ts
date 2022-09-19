@@ -22,7 +22,15 @@ export const commentsSlice = createSlice({
       state.currentUser = currentUser;
       state.comments = comments;
     },
+    onChangeScore: (state, { payload }) => {
+      state.comments = state.comments.map((comment) => {
+        if (payload.id === comment.id) {
+          comment.score = comment.score + payload.vote;
+        }
+        return comment;
+      });
+    },
   },
 });
 
-export const { onGetComments } = commentsSlice.actions;
+export const { onGetComments, onChangeScore } = commentsSlice.actions;
