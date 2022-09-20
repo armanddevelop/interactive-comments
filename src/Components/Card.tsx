@@ -22,8 +22,12 @@ export const CardAddComments = () => {
         />
         <Button
           variant="contained"
-          color="secondary"
-          sx={{ width: "12%", marginLeft: "20px", height: "50px" }}
+          sx={{
+            width: "12%",
+            marginLeft: "20px",
+            height: "50px",
+            background: "#5D08B2",
+          }}
         >
           SEND
         </Button>

@@ -25,18 +25,21 @@ export const CardComments = ({
   cardId,
 }: CardCommentsProps) => {
   return (
-    <Card sx={{ maxWidth: 1200, marginTop: 3 }} variant="outlined">
+    <Card
+      sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
+      variant="outlined"
+    >
       <ScoreComponent cardId={cardId} score={score} />
-      <CardHeader
-        title={user.username}
-        subheader={createdAt}
-        avatar={<Avatar src={user.image.png} alt={user.username} />}
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {content}
-        </Typography>
-      </CardContent>
+      <Box sx={{ display: "inline-block" }}>
+        <CardHeader
+          title={user.username}
+          subheader={createdAt}
+          avatar={<Avatar src={user.image.png} alt={user.username} />}
+        />
+        <CardContent>
+          <Typography variant="body2">{content}</Typography>
+        </CardContent>
+      </Box>
     </Card>
   );
 };

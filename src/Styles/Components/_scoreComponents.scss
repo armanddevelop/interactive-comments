@@ -1,0 +1,13 @@
+.scorecomponents__score-button-group{
+  margin-top: 15%;
+  @media (min-width: $mobile-portrait) {
+    margin-top: 5%;
+  }
+
+  @media (min-width: $breakpoint-tablet){
+    margin-top: 5%;
+  }
+  @media (min-width: $extend-desktop) {
+      margin-top: 3%;
+  }
+}
