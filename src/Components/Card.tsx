@@ -1,13 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Box, Avatar, TextField, Button } from "@mui/material";
-import { useCardsContent } from "../Hooks/useCardsContent";
+import { useCardsContent, useCardComments } from "../Hooks";
 
 export const CardAddComments = () => {
+  const [comment, setComment] = useState("");
   const { getComments, currentUser } = useCardsContent();
+  const { createComment } = useCardComments();
   const { username, image } = currentUser;
   useEffect(() => {
     getComments();
   }, []);
+
+  const handleClick = () => {
+    createComment(comment);
+    setComment("");
+  };
 
   return (
     <Card sx={{ maxWidth: 1200, marginTop: 3 }} variant="outlined">
@@ -15,6 +22,8 @@ export const CardAddComments = () => {
         <Avatar alt={username} sx={{ width: 60, height: 60 }} src={image.png} />
         <TextField
           placeholder="Add comments..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           multiline
           rows={4}
           color="secondary"
@@ -22,6 +31,7 @@ export const CardAddComments = () => {
         />
         <Button
           variant="contained"
+          onClick={() => handleClick()}
           sx={{
             width: "12%",
             marginLeft: "20px",

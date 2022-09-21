@@ -5,12 +5,12 @@ import { useCardsContent } from "../Hooks/useCardsContent";
 
 type ScoreComponentProps = {
   score: number;
-  cardId: number;
+  cardId: string;
 };
 
 export const ScoreComponent = ({ score, cardId }: ScoreComponentProps) => {
   const { changeScore } = useCardsContent();
-  const handleClick = (id: number, vote: number) => {
+  const handleClick = (id: string, vote: number) => {
     const votes = {
       id,
       vote,

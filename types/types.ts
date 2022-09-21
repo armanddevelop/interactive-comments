@@ -4,7 +4,7 @@ export type TImage = {
 };
 
 export type repliesObj = {
-  id: number;
+  id: string;
   content: string;
   createdAt: string;
   replyingTo: string;
@@ -15,7 +15,7 @@ export type repliesObj = {
 };
 
 export type TComments = {
-  id: number;
+  id: string;
   content: string;
   createdAt: string;
   score: number;

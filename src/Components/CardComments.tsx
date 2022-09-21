@@ -14,7 +14,7 @@ type CardCommentsProps = {
   createdAt: string;
   user: TCurrentUser;
   score: number;
-  cardId: number;
+  cardId: string;
 };
 
 export const CardComments = ({
