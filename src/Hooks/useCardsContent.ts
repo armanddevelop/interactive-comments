@@ -9,8 +9,17 @@ export const useCardsContent = () => {
   );
   const dispatch = useDispatch();
   //TODO: async function
-  const getComments = () => {
-    dispatch(onGetComments(dataComments));
+  const getComments = async () => {
+    if (!localStorage.getItem("stateInitial")) {
+      dispatch(onGetComments(dataComments));
+    } else {
+      const initialState = JSON.parse(
+        localStorage.getItem("stateInitial") || ""
+      );
+      if (initialState !== "") {
+        dispatch(onGetComments(initialState));
+      }
+    }
   };
   const changeScore = (votes: any) => {
     dispatch(onChangeScore(votes));

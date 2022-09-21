@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { createSlice } from "@reduxjs/toolkit";
 import { TCurrentUser, TComments } from "../../../types/types";
 
@@ -46,12 +45,15 @@ export const commentsSlice = createSlice({
         }
         return comment;
       });
+      localStorage.setItem("stateInitial", JSON.stringify(state));
     },
     onCrateNewComment: (state, { payload }) => {
-      state.newComment.content = payload;
-      state.newComment.createdAt = "21/09/22";
-      state.newComment.id = uuidv4();
+      const { id, comment, dateCreation } = payload;
+      state.newComment.content = comment;
+      state.newComment.createdAt = dateCreation;
+      state.newComment.id = id;
       state.comments.push(state.newComment);
+      localStorage.setItem("stateInitial", JSON.stringify(state));
     },
   },
 });
