@@ -1,3 +1,4 @@
-export { DeleteButton } from "./DeleteButton";
+export { ModalComments } from "./Modal";
+export { MenuButtons } from "./MenuButtons";
 export { CardContentComments } from "./CardContent";
 export { CardAddComments } from "./Card";

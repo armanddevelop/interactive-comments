@@ -6,10 +6,11 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-
+import { useState } from "react";
 import { TCurrentUser } from "../../types/types";
 import { ScoreComponent } from "./ScoreComponent";
-import { DeleteButton } from "./DeleteButton";
+import { MenuButtons } from "./MenuButtons";
+import { ModalComments } from "./Modal";
 
 type CardCommentsProps = {
   content: string;
@@ -26,24 +27,34 @@ export const CardComments = ({
   score,
   cardId,
 }: CardCommentsProps) => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
-    <Card
-      className="card-comments"
-      sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
-      variant="outlined"
-    >
-      <ScoreComponent cardId={cardId} score={score} />
-      <Box sx={{ display: "inline-block" }}>
-        <CardHeader
-          title={user.username}
-          subheader={createdAt}
-          avatar={<Avatar src={user.image.png} alt={user.username} />}
-          action={<DeleteButton username={user.username} />}
-        />
-        <CardContent>
-          <Typography variant="body2">{content}</Typography>
-        </CardContent>
-      </Box>
-    </Card>
+    <>
+      <ModalComments openModal={openModal} setOpenModal={setOpenModal} />
+      <Card
+        className="card-comments"
+        sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
+        variant="outlined"
+      >
+        <ScoreComponent cardId={cardId} score={score} />
+        <Box sx={{ display: "inline-block" }}>
+          <CardHeader
+            title={user.username}
+            subheader={createdAt}
+            avatar={<Avatar src={user.image.png} alt={user.username} />}
+            action={
+              <MenuButtons
+                username={user.username}
+                setOpenModal={setOpenModal}
+              />
+            }
+          />
+          <CardContent>
+            <Typography variant="body2">{content}</Typography>
+          </CardContent>
+        </Box>
+      </Card>
+    </>
   );
 };

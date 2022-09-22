@@ -3,3 +3,10 @@
     flex: none;
   }
 }
+.modal-comments > :nth-child(3){
+  border-radius: 15px;
+  width: 70%;
+  button{
+    margin: 5px;
+  }
+}
