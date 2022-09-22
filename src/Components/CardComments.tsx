@@ -6,8 +6,10 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+
 import { TCurrentUser } from "../../types/types";
 import { ScoreComponent } from "./ScoreComponent";
+import { DeleteButton } from "./DeleteButton";
 
 type CardCommentsProps = {
   content: string;
@@ -26,6 +28,7 @@ export const CardComments = ({
 }: CardCommentsProps) => {
   return (
     <Card
+      className="card-comments"
       sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
       variant="outlined"
     >
@@ -35,6 +38,7 @@ export const CardComments = ({
           title={user.username}
           subheader={createdAt}
           avatar={<Avatar src={user.image.png} alt={user.username} />}
+          action={<DeleteButton username={user.username} />}
         />
         <CardContent>
           <Typography variant="body2">{content}</Typography>

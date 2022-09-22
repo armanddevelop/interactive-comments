@@ -45,7 +45,7 @@ export const commentsSlice = createSlice({
         }
         return comment;
       });
-      localStorage.setItem("stateInitial", JSON.stringify(state));
+      sessionStorage.setItem("stateInitial", JSON.stringify(state));
     },
     onCrateNewComment: (state, { payload }) => {
       const { id, comment, dateCreation } = payload;
@@ -53,7 +53,7 @@ export const commentsSlice = createSlice({
       state.newComment.createdAt = dateCreation;
       state.newComment.id = id;
       state.comments.push(state.newComment);
-      localStorage.setItem("stateInitial", JSON.stringify(state));
+      sessionStorage.setItem("stateInitial", JSON.stringify(state));
     },
   },
 });

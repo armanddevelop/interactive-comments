@@ -10,11 +10,11 @@ export const useCardsContent = () => {
   const dispatch = useDispatch();
   //TODO: async function
   const getComments = async () => {
-    if (!localStorage.getItem("stateInitial")) {
+    if (!sessionStorage.getItem("stateInitial")) {
       dispatch(onGetComments(dataComments));
     } else {
       const initialState = JSON.parse(
-        localStorage.getItem("stateInitial") || ""
+        sessionStorage.getItem("stateInitial") || ""
       );
       if (initialState !== "") {
         dispatch(onGetComments(initialState));
@@ -24,5 +24,6 @@ export const useCardsContent = () => {
   const changeScore = (votes: any) => {
     dispatch(onChangeScore(votes));
   };
+
   return { currentUser, comments, getComments, changeScore };
 };
