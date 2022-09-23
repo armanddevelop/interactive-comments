@@ -14,6 +14,7 @@ export const CardContentComments = () => {
             user={user}
             score={score}
             cardId={id}
+            replies={replies}
           />
         );
       })}

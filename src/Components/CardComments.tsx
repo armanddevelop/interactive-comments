@@ -6,8 +6,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { TCurrentUser } from "../../types/types";
+import { repliesObj, TCurrentUser } from "../../types/types";
 import { ScoreComponent } from "./ScoreComponent";
 import { MenuButtons } from "./MenuButtons";
 import { ModalComments } from "./Modal";
@@ -18,6 +17,7 @@ type CardCommentsProps = {
   user: TCurrentUser;
   score: number;
   cardId: string;
+  replies: Array<repliesObj>;
 };
 
 export const CardComments = ({
@@ -26,12 +26,11 @@ export const CardComments = ({
   user,
   score,
   cardId,
+  replies,
 }: CardCommentsProps) => {
-  const [openModal, setOpenModal] = useState(false);
-
   return (
     <>
-      <ModalComments openModal={openModal} setOpenModal={setOpenModal} />
+      <ModalComments cardId={cardId} typeComment={"comment"} />
       <Card
         className="card-comments"
         sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
@@ -43,18 +42,38 @@ export const CardComments = ({
             title={user.username}
             subheader={createdAt}
             avatar={<Avatar src={user.image.png} alt={user.username} />}
-            action={
-              <MenuButtons
-                username={user.username}
-                setOpenModal={setOpenModal}
-              />
-            }
+            action={<MenuButtons username={user.username} />}
           />
           <CardContent>
             <Typography variant="body2">{content}</Typography>
           </CardContent>
         </Box>
       </Card>
+      {replies.map(({ id, content, createdAt, score, user }) => {
+        return (
+          <div key={id}>
+            <ModalComments cardId={id} typeComment={"reply"} />
+            <Card
+              className="card-comments"
+              sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
+              variant="outlined"
+            >
+              <ScoreComponent cardId={id} score={score} />
+              <Box sx={{ display: "inline-block" }}>
+                <CardHeader
+                  title={user.username}
+                  subheader={createdAt}
+                  avatar={<Avatar src={user.image.png} alt={user.username} />}
+                  action={<MenuButtons username={user.username} />}
+                />
+                <CardContent>
+                  <Typography variant="body2">{content}</Typography>
+                </CardContent>
+              </Box>
+            </Card>
+          </div>
+        );
+      })}
     </>
   );
 };

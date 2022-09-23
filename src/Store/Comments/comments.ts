@@ -55,8 +55,27 @@ export const commentsSlice = createSlice({
       state.comments.push(state.newComment);
       sessionStorage.setItem("stateInitial", JSON.stringify(state));
     },
+    onDeleteComment: (state, { payload }) => {
+      console.log("esto vale payload ", payload);
+      const { cardId, typeComment } = payload;
+      if (typeComment === "comment") {
+        state.comments = state.comments.filter(({ id }) => id !== cardId);
+        sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      } else {
+        state.comments.map(({ replies }) => {
+          if (replies.length !== 0) {
+            replies.filter(({ id }) => id !== cardId);
+          }
+          return replies;
+        });
+      }
+    },
   },
 });
 
-export const { onGetComments, onChangeScore, onCrateNewComment } =
-  commentsSlice.actions;
+export const {
+  onGetComments,
+  onChangeScore,
+  onCrateNewComment,
+  onDeleteComment,
+} = commentsSlice.actions;

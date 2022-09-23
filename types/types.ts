@@ -7,6 +7,7 @@ export type repliesObj = {
   id: string;
   content: string;
   createdAt: string;
+  score: number;
   replyingTo: string;
   user: {
     image: TImage;

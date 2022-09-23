@@ -2,26 +2,22 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ReplyIcon from "@mui/icons-material/Reply";
-import { useSelector } from "react-redux";
-import { Dispatch, SetStateAction } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { onOpenModal } from "../Store/UI/uiEvents";
 
 type MenuButtonsProps = {
   username: string;
-  setOpenModal: Dispatch<SetStateAction<boolean>>;
 };
 
-export const MenuButtons = ({
-  username,
-
-  setOpenModal,
-}: MenuButtonsProps) => {
+export const MenuButtons = ({ username }: MenuButtonsProps) => {
   const { currentUser } = useSelector((state: any) => state.comments);
+  const dispatch = useDispatch();
 
   return (
     <>
       {currentUser.username === username ? (
         <>
-          <IconButton color="error" onClick={() => setOpenModal(true)}>
+          <IconButton color="error" onClick={() => dispatch(onOpenModal(true))}>
             <DeleteIcon />
           </IconButton>
           <IconButton aria-label="settings">

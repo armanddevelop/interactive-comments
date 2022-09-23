@@ -1,7 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { onCrateNewComment } from "../Store/Comments/comments";
+import { onCrateNewComment, onDeleteComment } from "../Store/Comments/comments";
+type CommentInfo = {
+  cardId: string;
+  typeComment: string;
+};
 
 export const useCardComments = () => {
   const dispatch = useDispatch();
@@ -16,5 +20,9 @@ export const useCardComments = () => {
     };
     dispatch(onCrateNewComment(newCommentPayload));
   };
-  return { createComment };
+
+  const deleteComment = async (commentInfo: CommentInfo) => {
+    dispatch(onDeleteComment(commentInfo));
+  };
+  return { createComment, deleteComment };
 };
