@@ -36,7 +36,7 @@ export const CardComments = ({
         sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
         variant="outlined"
       >
-        <ScoreComponent cardId={cardId} score={score} />
+        <ScoreComponent cardId={cardId} score={score} typeComment={"comment"} />
         <Box sx={{ display: "inline-block" }}>
           <CardHeader
             title={user.username}
@@ -58,7 +58,7 @@ export const CardComments = ({
               sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
               variant="outlined"
             >
-              <ScoreComponent cardId={id} score={score} />
+              <ScoreComponent cardId={id} score={score} typeComment={"reply"} />
               <Box sx={{ display: "inline-block" }}>
                 <CardHeader
                   title={user.username}

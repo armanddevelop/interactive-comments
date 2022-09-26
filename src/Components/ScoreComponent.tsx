@@ -6,16 +6,22 @@ import { useCardsContent } from "../Hooks/useCardsContent";
 type ScoreComponentProps = {
   score: number;
   cardId: string;
+  typeComment: string;
 };
 
-export const ScoreComponent = ({ score, cardId }: ScoreComponentProps) => {
+export const ScoreComponent = ({
+  score,
+  cardId,
+  typeComment,
+}: ScoreComponentProps) => {
   const { changeScore } = useCardsContent();
   const handleClick = (id: string, vote: number) => {
-    const votes = {
+    const scoreInfo = {
       id,
       vote,
+      typeComment,
     };
-    changeScore(votes);
+    changeScore(scoreInfo);
   };
   return (
     <ButtonGroup

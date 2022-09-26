@@ -39,13 +39,29 @@ export const commentsSlice = createSlice({
       state.newComment.user.username = currentUser.username;
     },
     onChangeScore: (state, { payload }) => {
-      state.comments = state.comments.map((comment) => {
-        if (payload.id === comment.id) {
-          comment.score = comment.score + payload.vote;
-        }
-        return comment;
-      });
-      sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      const { typeComment } = payload;
+      if (typeComment === "comment") {
+        state.comments = state.comments.map((comment) => {
+          if (payload.id === comment.id) {
+            comment.score = comment.score + payload.vote;
+          }
+          return comment;
+        });
+        sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      } else {
+        state.comments.forEach(({ replies }, idx) => {
+          let idxComments = 0;
+          if (replies.length !== 0) {
+            idxComments = idx;
+            replies.forEach((reply, idx) => {
+              if (reply.id === payload.id) {
+                state.comments[idxComments].replies[idx].score += payload.vote;
+              }
+            });
+          }
+        });
+        sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      }
     },
     onCrateNewComment: (state, { payload }) => {
       const { id, comment, dateCreation } = payload;
@@ -62,12 +78,12 @@ export const commentsSlice = createSlice({
         state.comments = state.comments.filter(({ id }) => id !== cardId);
         sessionStorage.setItem("stateInitial", JSON.stringify(state));
       } else {
-        state.comments.map(({ replies }) => {
-          if (replies.length !== 0) {
-            replies.filter(({ id }) => id !== cardId);
-          }
-          return replies;
-        });
+        // state.comments.map(({ replies }) => {
+        //   if (replies.length !== 0) {
+        //     replies.filter(({ id }) => id !== cardId);
+        //   }
+        //   return replies;
+        // });
       }
     },
   },
