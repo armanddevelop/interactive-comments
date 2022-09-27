@@ -30,7 +30,7 @@ export const CardComments = ({
 }: CardCommentsProps) => {
   return (
     <>
-      <ModalComments cardId={cardId} typeComment={"comment"} />
+      <ModalComments typeComment={"comment"} />
       <Card
         className="card-comments"
         sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
@@ -42,7 +42,7 @@ export const CardComments = ({
             title={user.username}
             subheader={createdAt}
             avatar={<Avatar src={user.image.png} alt={user.username} />}
-            action={<MenuButtons username={user.username} />}
+            action={<MenuButtons cardId={cardId} username={user.username} />}
           />
           <CardContent>
             <Typography variant="body2">{content}</Typography>
@@ -52,7 +52,7 @@ export const CardComments = ({
       {replies.map(({ id, content, createdAt, score, user }) => {
         return (
           <div key={id}>
-            <ModalComments cardId={id} typeComment={"reply"} />
+            <ModalComments typeComment={"reply"} />
             <Card
               className="card-comments"
               sx={{ maxWidth: 1200, marginTop: 3, display: "flex" }}
@@ -64,7 +64,7 @@ export const CardComments = ({
                   title={user.username}
                   subheader={createdAt}
                   avatar={<Avatar src={user.image.png} alt={user.username} />}
-                  action={<MenuButtons username={user.username} />}
+                  action={<MenuButtons cardId={id} username={user.username} />}
                 />
                 <CardContent>
                   <Typography variant="body2">{content}</Typography>

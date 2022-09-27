@@ -16,17 +16,23 @@ const style = {
 };
 
 type ModalCommentsProps = {
-  cardId: string;
   typeComment: string;
 };
 
-export const ModalComments = ({ cardId, typeComment }: ModalCommentsProps) => {
+export const ModalComments = ({ typeComment }: ModalCommentsProps) => {
   const dispatch = useDispatch();
-  const { openModal: isOpen } = useSelector((state: any) => state.uiEvents);
+  const { uiEvents, comments } = useSelector((state: any) => state);
   const { deleteComment } = useCardComments();
+  const { openModal: isOpen } = uiEvents;
+  const { commentId } = comments;
+
   const handleClick = () => {
+    const commentInfo = {
+      id: commentId,
+      typeComment,
+    };
     dispatch(onOpenModal(false));
-    deleteComment({ cardId, typeComment });
+    deleteComment(commentInfo);
   };
   return (
     <Modal
@@ -53,7 +59,11 @@ export const ModalComments = ({ cardId, typeComment }: ModalCommentsProps) => {
           >
             NO, CANCEL
           </Button>
-          <Button variant="contained" color="error" onClick={handleClick}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleClick()}
+          >
             YES, DELETE
           </Button>
         </Box>

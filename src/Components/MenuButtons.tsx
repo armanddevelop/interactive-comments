@@ -2,22 +2,30 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ReplyIcon from "@mui/icons-material/Reply";
-import { useSelector, useDispatch } from "react-redux";
-import { onOpenModal } from "../Store/UI/uiEvents";
+import { useSelector } from "react-redux";
+import { useCardComments } from "../Hooks/useCardComments";
 
 type MenuButtonsProps = {
   username: string;
+  cardId?: string;
 };
 
-export const MenuButtons = ({ username }: MenuButtonsProps) => {
+export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
   const { currentUser } = useSelector((state: any) => state.comments);
-  const dispatch = useDispatch();
-
+  const { setActiveComment } = useCardComments();
+  const handleClick = (e: React.MouseEvent<HTMLElement>, id: string = "") => {
+    const { name } = e.currentTarget.dataset;
+    setActiveComment(name, id);
+  };
   return (
     <>
       {currentUser.username === username ? (
         <>
-          <IconButton color="error" onClick={() => dispatch(onOpenModal(true))}>
+          <IconButton
+            color="error"
+            data-name="delete"
+            onClick={(e) => handleClick(e, cardId)}
+          >
             <DeleteIcon />
           </IconButton>
           <IconButton aria-label="settings">
@@ -26,7 +34,11 @@ export const MenuButtons = ({ username }: MenuButtonsProps) => {
         </>
       ) : (
         <>
-          <IconButton color="secondary">
+          <IconButton
+            color="secondary"
+            data-name="reply"
+            onClick={(e) => handleClick(e, cardId)}
+          >
             <ReplyIcon />
           </IconButton>
         </>

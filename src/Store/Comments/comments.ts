@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TCurrentUser, TComments } from "../../../types/types";
+import { TCurrentUser, TComments, repliesObj } from "../../../types/types";
 
 const currentUser: TCurrentUser = {
   image: {
@@ -29,6 +29,7 @@ export const commentsSlice = createSlice({
     currentUser,
     comments,
     newComment,
+    commentId: "",
   },
   reducers: {
     onGetComments: (state, { payload }) => {
@@ -72,19 +73,24 @@ export const commentsSlice = createSlice({
       sessionStorage.setItem("stateInitial", JSON.stringify(state));
     },
     onDeleteComment: (state, { payload }) => {
-      console.log("esto vale payload ", payload);
-      const { cardId, typeComment } = payload;
+      const { id: cardId, typeComment } = payload;
       if (typeComment === "comment") {
         state.comments = state.comments.filter(({ id }) => id !== cardId);
         sessionStorage.setItem("stateInitial", JSON.stringify(state));
       } else {
-        // state.comments.map(({ replies }) => {
-        //   if (replies.length !== 0) {
-        //     replies.filter(({ id }) => id !== cardId);
-        //   }
-        //   return replies;
-        // });
+        let newReplies: Array<repliesObj> = [];
+        state.comments.forEach(({ replies }, idx) => {
+          let idxComments = 0;
+          if (replies.length !== 0) {
+            idxComments = idx;
+            newReplies = replies.filter(({ id }) => id !== cardId);
+            return (state.comments[idxComments].replies = newReplies);
+          }
+        });
       }
+    },
+    onSetCommentActive: (state, { payload }) => {
+      state.commentId = payload;
     },
   },
 });
@@ -94,4 +100,5 @@ export const {
   onChangeScore,
   onCrateNewComment,
   onDeleteComment,
+  onSetCommentActive,
 } = commentsSlice.actions;
