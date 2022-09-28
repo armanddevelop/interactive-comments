@@ -23,13 +23,29 @@ const newComment: TComments = {
   },
   replies: [],
 };
+const newReply: repliesObj = {
+  id: "",
+  content: "",
+  createdAt: "",
+  score: 0,
+  replyingTo: "",
+  user: {
+    image: {
+      png: "",
+      webp: "",
+    },
+    username: "",
+  },
+};
 export const commentsSlice = createSlice({
   name: "comments",
   initialState: {
     currentUser,
     comments,
     newComment,
+    newReply,
     commentId: "",
+    replyToName: "",
   },
   reducers: {
     onGetComments: (state, { payload }) => {
@@ -65,12 +81,27 @@ export const commentsSlice = createSlice({
       }
     },
     onCrateNewComment: (state, { payload }) => {
-      const { id, comment, dateCreation } = payload;
-      state.newComment.content = comment;
-      state.newComment.createdAt = dateCreation;
-      state.newComment.id = id;
-      state.comments.push(state.newComment);
-      sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      const { id, comment, dateCreation, typeComment, replyingTo } = payload;
+      if (typeComment !== "reply") {
+        state.newComment.content = comment;
+        state.newComment.createdAt = dateCreation;
+        state.newComment.id = id;
+        state.comments.push(state.newComment);
+        sessionStorage.setItem("stateInitial", JSON.stringify(state));
+      } else {
+        state.newReply.content = comment;
+        state.newReply.createdAt = dateCreation;
+        state.newReply.id = id;
+        state.newReply.replyingTo = replyingTo;
+        state.newReply.user.image.png = state.currentUser.image.png;
+        state.newReply.user.image.webp = state.currentUser.image.webp;
+        state.newReply.user.username = state.currentUser.username;
+        state.comments.forEach(({ user }, idx) => {
+          if (user.username === replyingTo) {
+            state.comments[idx].replies.push(state.newReply);
+          }
+        });
+      }
     },
     onDeleteComment: (state, { payload }) => {
       const { id: cardId, typeComment } = payload;
@@ -89,8 +120,13 @@ export const commentsSlice = createSlice({
         });
       }
     },
+
     onSetCommentActive: (state, { payload }) => {
       state.commentId = payload;
+    },
+
+    onSetReplyName: (state, { payload }) => {
+      state.replyToName = payload;
     },
   },
 });
@@ -101,4 +137,5 @@ export const {
   onCrateNewComment,
   onDeleteComment,
   onSetCommentActive,
+  onSetReplyName,
 } = commentsSlice.actions;

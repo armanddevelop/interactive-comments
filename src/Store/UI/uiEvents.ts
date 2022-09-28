@@ -5,6 +5,7 @@ export const uiEventsSlice = createSlice({
   initialState: {
     openModal: false,
     isReplyOpen: false,
+    typeComment: "comment",
   },
   reducers: {
     onOpenModal: (state, { payload }) => {
@@ -13,6 +14,10 @@ export const uiEventsSlice = createSlice({
     onOpenReply: (state, { payload }) => {
       state.isReplyOpen = payload;
     },
+    onSetTypeComment: (state, { payload }) => {
+      state.typeComment = payload;
+    },
   },
 });
-export const { onOpenModal, onOpenReply } = uiEventsSlice.actions;
+export const { onOpenModal, onOpenReply, onSetTypeComment } =
+  uiEventsSlice.actions;

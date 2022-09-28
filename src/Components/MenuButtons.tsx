@@ -14,9 +14,9 @@ export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
   const { currentUser } = useSelector((state: any) => state.comments);
   const { setActiveComment, openReply } = useCardComments();
   const handleClick = (e: React.MouseEvent<HTMLElement>, id: string = "") => {
-    const { name } = e.currentTarget.dataset;
-    setActiveComment(name, id);
-    openReply(name, id);
+    const { action } = e.currentTarget.dataset;
+    setActiveComment(action, id);
+    openReply(action, id, username);
   };
   return (
     <>
@@ -24,7 +24,7 @@ export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
         <>
           <IconButton
             color="error"
-            data-name="delete"
+            data-action="delete"
             onClick={(e) => handleClick(e, cardId)}
           >
             <DeleteIcon />
@@ -37,7 +37,7 @@ export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
         <>
           <IconButton
             color="secondary"
-            data-name="reply"
+            data-action="reply"
             onClick={(e) => handleClick(e, cardId)}
           >
             <ReplyIcon />
