@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
 import { Card, Box, Avatar, TextField, Button } from "@mui/material";
 import { useCardsContent, useCardComments } from "../Hooks";
 
 export const CardAddComments = () => {
-  const [comment, setComment] = useState("");
-  const { getComments, currentUser } = useCardsContent();
-  const { createComment } = useCardComments();
+  const { currentUser } = useCardsContent();
+  const { createComment, comment, setComment } = useCardComments();
   const { username, image } = currentUser;
-  useEffect(() => {
-    getComments();
-  }, []);
-
   const handleClick = () => {
     createComment(comment);
     setComment("");

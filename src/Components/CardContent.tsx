@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import { useCardsContent } from "../Hooks/useCardsContent";
 import { CardComments } from "./CardComments";
 
 export const CardContentComments = () => {
-  const { comments } = useCardsContent();
+  const { getComments, comments } = useCardsContent();
+  useEffect(() => {
+    getComments();
+  }, []);
   return (
     <>
       {comments.map(({ id, content, createdAt, score, user, replies }) => {

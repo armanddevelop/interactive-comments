@@ -12,10 +12,11 @@ type MenuButtonsProps = {
 
 export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
   const { currentUser } = useSelector((state: any) => state.comments);
-  const { setActiveComment } = useCardComments();
+  const { setActiveComment, openReply } = useCardComments();
   const handleClick = (e: React.MouseEvent<HTMLElement>, id: string = "") => {
     const { name } = e.currentTarget.dataset;
     setActiveComment(name, id);
+    openReply(name, id);
   };
   return (
     <>

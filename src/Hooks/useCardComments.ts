@@ -1,12 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   onCrateNewComment,
   onDeleteComment,
   onSetCommentActive,
 } from "../Store/Comments/comments";
-import { onOpenModal } from "../Store/UI/uiEvents";
+import { onOpenModal, onOpenReply } from "../Store/UI/uiEvents";
+
 type CommentInfo = {
   id: string;
   typeComment: string;
@@ -14,6 +16,7 @@ type CommentInfo = {
 
 export const useCardComments = () => {
   const dispatch = useDispatch();
+  const [comment, setComment] = useState("");
 
   //TODO: make async function to POST Comment
   const createComment = async (comment: string) => {
@@ -38,5 +41,18 @@ export const useCardComments = () => {
       return dispatch(onOpenModal(true));
     }
   };
-  return { createComment, deleteComment, setActiveComment };
+  const openReply = (name: string | undefined, id: string | number) => {
+    if (name === "reply") {
+      dispatch(onSetCommentActive(id));
+      dispatch(onOpenReply(true));
+    }
+  };
+  return {
+    comment,
+    openReply,
+    createComment,
+    deleteComment,
+    setActiveComment,
+    setComment,
+  };
 };

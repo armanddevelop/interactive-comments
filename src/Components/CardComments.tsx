@@ -6,10 +6,12 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 import { repliesObj, TCurrentUser } from "../../types/types";
 import { ScoreComponent } from "./ScoreComponent";
 import { MenuButtons } from "./MenuButtons";
 import { ModalComments } from "./Modal";
+import { CardAddComments } from "./Card";
 
 type CardCommentsProps = {
   content: string;
@@ -28,6 +30,9 @@ export const CardComments = ({
   cardId,
   replies,
 }: CardCommentsProps) => {
+  const { uiEvents, comments } = useSelector((state: any) => state);
+  const { commentId } = comments;
+  const { isReplyOpen } = uiEvents;
   return (
     <>
       <ModalComments typeComment={"comment"} />
@@ -49,6 +54,7 @@ export const CardComments = ({
           </CardContent>
         </Box>
       </Card>
+      {isReplyOpen && cardId === commentId && <CardAddComments />}
       {replies.map(({ id, content, createdAt, score, user }) => {
         return (
           <div key={id}>
@@ -71,6 +77,7 @@ export const CardComments = ({
                 </CardContent>
               </Box>
             </Card>
+            {isReplyOpen && id === commentId && <CardAddComments />}
           </div>
         );
       })}
