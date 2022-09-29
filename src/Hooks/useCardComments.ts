@@ -53,6 +53,8 @@ export const useCardComments = () => {
     } else if (typeComment === "reply") {
       newCommentPayload.replyingTo = replyToName;
       dispatch(onCrateNewComment(newCommentPayload));
+      dispatch(onSetTypeComment("comment"));
+      dispatch(onOpenReply(false));
     }
   };
 

@@ -1,42 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TCurrentUser, TComments, repliesObj } from "../../../types/types";
+import { repliesObj } from "../../../types/types";
+import { currentUser, comments, newComment, newReply } from "../initialState";
 
-const currentUser: TCurrentUser = {
-  image: {
-    png: "",
-    webp: "",
-  },
-  username: "",
-};
-const comments: Array<TComments> = [];
-const newComment: TComments = {
-  id: "",
-  content: "",
-  createdAt: "",
-  score: 0,
-  user: {
-    image: {
-      png: "",
-      webp: "",
-    },
-    username: "",
-  },
-  replies: [],
-};
-const newReply: repliesObj = {
-  id: "",
-  content: "",
-  createdAt: "",
-  score: 0,
-  replyingTo: "",
-  user: {
-    image: {
-      png: "",
-      webp: "",
-    },
-    username: "",
-  },
-};
 export const commentsSlice = createSlice({
   name: "comments",
   initialState: {
@@ -54,6 +19,8 @@ export const commentsSlice = createSlice({
       state.comments = comments;
       state.newComment.user.image = currentUser.image;
       state.newComment.user.username = currentUser.username;
+      state.newReply.user.image = currentUser.image;
+      state.newReply.user.username = currentUser.username;
     },
     onChangeScore: (state, { payload }) => {
       const { typeComment } = payload;
@@ -93,14 +60,12 @@ export const commentsSlice = createSlice({
         state.newReply.createdAt = dateCreation;
         state.newReply.id = id;
         state.newReply.replyingTo = replyingTo;
-        state.newReply.user.image.png = state.currentUser.image.png;
-        state.newReply.user.image.webp = state.currentUser.image.webp;
-        state.newReply.user.username = state.currentUser.username;
         state.comments.forEach(({ user }, idx) => {
           if (user.username === replyingTo) {
-            state.comments[idx].replies.push(state.newReply);
+            state.comments[idx].replies.unshift(state.newReply);
           }
         });
+        sessionStorage.setItem("stateInitial", JSON.stringify(state));
       }
     },
     onDeleteComment: (state, { payload }) => {
