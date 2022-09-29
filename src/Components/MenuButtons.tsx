@@ -12,14 +12,11 @@ type MenuButtonsProps = {
 
 export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
   const { currentUser } = useSelector((state: any) => state.comments);
-  const { setActiveComment, openReply, openEdit } = useCardComments();
+  const { setActiveComment, openReply } = useCardComments();
   const handleClick = (e: React.MouseEvent<HTMLElement>, id: string = "") => {
     const { action } = e.currentTarget.dataset;
     setActiveComment(action, id);
     openReply(action, id, username);
-  };
-  const handleEdit = () => {
-    openEdit();
   };
   return (
     <>
@@ -32,7 +29,11 @@ export const MenuButtons = ({ username, cardId }: MenuButtonsProps) => {
           >
             <DeleteIcon />
           </IconButton>
-          <IconButton aria-label="settings" onClick={() => handleEdit()}>
+          <IconButton
+            data-action="edit"
+            aria-label="settings"
+            onClick={(e) => handleClick(e, cardId)}
+          >
             <EditIcon />
           </IconButton>
         </>

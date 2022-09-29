@@ -70,6 +70,10 @@ export const useCardComments = () => {
       dispatch(onSetCommentActive(id));
       return dispatch(onOpenModal(true));
     }
+    if (nameEvent === "edit") {
+      dispatch(onSetCommentActive(id));
+      dispatch(onsetEditComment(true));
+    }
   };
 
   const openReply = (
@@ -84,9 +88,7 @@ export const useCardComments = () => {
       dispatch(onOpenReply(true));
     }
   };
-  const openEdit = () => {
-    dispatch(onsetEditComment(true));
-  };
+
   return {
     comment,
     openReply,
@@ -94,6 +96,5 @@ export const useCardComments = () => {
     deleteComment,
     setActiveComment,
     setComment,
-    openEdit,
   };
 };

@@ -22,6 +22,7 @@ export const commentsSlice = createSlice({
       state.newReply.user.image = currentUser.image;
       state.newReply.user.username = currentUser.username;
     },
+
     onChangeScore: (state, { payload }) => {
       const { typeComment } = payload;
       if (typeComment === "comment") {
@@ -47,6 +48,7 @@ export const commentsSlice = createSlice({
         sessionStorage.setItem("stateInitial", JSON.stringify(state));
       }
     },
+
     onCrateNewComment: (state, { payload }) => {
       const { id, comment, dateCreation, typeComment, replyingTo } = payload;
       if (typeComment !== "reply") {
@@ -68,6 +70,7 @@ export const commentsSlice = createSlice({
         sessionStorage.setItem("stateInitial", JSON.stringify(state));
       }
     },
+
     onDeleteComment: (state, { payload }) => {
       const { id: cardId, typeComment } = payload;
       if (typeComment === "comment") {
