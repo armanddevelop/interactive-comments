@@ -54,7 +54,9 @@ export const CardComments = ({
           </CardContent>
         </Box>
       </Card>
-      {isReplyOpen && cardId === commentId && <CardAddComments />}
+      {isReplyOpen && cardId === commentId && (
+        <CardAddComments buttonName={"REPLY"} />
+      )}
       {replies.map(({ id, content, createdAt, score, user }) => {
         return (
           <div key={id}>
@@ -77,7 +79,9 @@ export const CardComments = ({
                 </CardContent>
               </Box>
             </Card>
-            {isReplyOpen && id === commentId && <CardAddComments />}
+            {isReplyOpen && id === commentId && (
+              <CardAddComments buttonName={"REPLY"} />
+            )}
           </div>
         );
       })}

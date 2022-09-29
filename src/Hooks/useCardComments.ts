@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-
 import {
   onCrateNewComment,
   onDeleteComment,
@@ -13,6 +12,7 @@ import {
   onOpenModal,
   onOpenReply,
   onSetTypeComment,
+  onsetEditComment,
 } from "../Store/UI/uiEvents";
 
 type CommentInfoToDelete = {
@@ -84,6 +84,9 @@ export const useCardComments = () => {
       dispatch(onOpenReply(true));
     }
   };
+  const openEdit = () => {
+    dispatch(onsetEditComment(true));
+  };
   return {
     comment,
     openReply,
@@ -91,5 +94,6 @@ export const useCardComments = () => {
     deleteComment,
     setActiveComment,
     setComment,
+    openEdit,
   };
 };

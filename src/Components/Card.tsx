@@ -1,7 +1,11 @@
 import { Card, Box, Avatar, TextField, Button } from "@mui/material";
 import { useCardsContent, useCardComments } from "../Hooks";
 
-export const CardAddComments = () => {
+type CardAddCommentsProps = {
+  buttonName: string;
+};
+
+export const CardAddComments = ({ buttonName }: CardAddCommentsProps) => {
   const { currentUser } = useCardsContent();
   const { createComment, comment, setComment } = useCardComments();
   const { username, image } = currentUser;
@@ -15,7 +19,7 @@ export const CardAddComments = () => {
       <Box sx={{ p: 2, display: "flex" }}>
         <Avatar alt={username} sx={{ width: 60, height: 60 }} src={image.png} />
         <TextField
-          placeholder="Add comments..."
+          placeholder={`Add ${buttonName === "SEND" ? "comments" : "reply"}...`}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           multiline
@@ -33,7 +37,7 @@ export const CardAddComments = () => {
             background: "#5D08B2",
           }}
         >
-          SEND
+          {buttonName}
         </Button>
       </Box>
     </Card>

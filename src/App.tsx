@@ -9,7 +9,7 @@ function App() {
     <Provider store={store}>
       <Container fixed>
         <CardContentComments />
-        <CardAddComments />
+        <CardAddComments buttonName={"SEND"} />
       </Container>
     </Provider>
   );
