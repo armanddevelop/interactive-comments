@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   onCrateNewComment,
   onDeleteComment,
+  onEditComment,
   onSetCommentActive,
   onSetReplyName,
 } from "../Store/Comments/comments";
@@ -26,6 +27,12 @@ type CommentInfo = {
   comment: string;
   typeComment: string;
   replyingTo?: string;
+};
+
+type commentEdit = {
+  comment: string;
+  commentIdToEdit: string;
+  typeContent: string;
 };
 
 export const useCardComments = () => {
@@ -55,6 +62,17 @@ export const useCardComments = () => {
       dispatch(onCrateNewComment(newCommentPayload));
       dispatch(onSetTypeComment("comment"));
       dispatch(onOpenReply(false));
+    }
+  };
+
+  const editComment = async ({
+    comment,
+    commentIdToEdit,
+    typeContent,
+  }: commentEdit) => {
+    if (comment !== "") {
+      dispatch(onEditComment({ comment, commentIdToEdit, typeContent }));
+      dispatch(onsetEditComment(false));
     }
   };
 
@@ -93,6 +111,7 @@ export const useCardComments = () => {
     comment,
     openReply,
     createComment,
+    editComment,
     deleteComment,
     setActiveComment,
     setComment,

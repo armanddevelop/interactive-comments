@@ -89,6 +89,17 @@ export const commentsSlice = createSlice({
       }
     },
 
+    onEditComment: (state, { payload }) => {
+      const { typeContent, comment, commentIdToEdit } = payload;
+      if (typeContent === "comment") {
+        state.comments.forEach(({ id }, idx) => {
+          if (id === commentIdToEdit) {
+            state.comments[idx].content = comment;
+          }
+        });
+      }
+    },
+
     onSetCommentActive: (state, { payload }) => {
       state.commentId = payload;
     },
@@ -103,6 +114,7 @@ export const {
   onGetComments,
   onChangeScore,
   onCrateNewComment,
+  onEditComment,
   onDeleteComment,
   onSetCommentActive,
   onSetReplyName,

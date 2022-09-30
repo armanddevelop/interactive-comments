@@ -12,6 +12,7 @@ import { ScoreComponent } from "./ScoreComponent";
 import { MenuButtons } from "./MenuButtons";
 import { ModalComments } from "./Modal";
 import { CardAddComments } from "./Card";
+import { CardShowContent } from "./CardShowContent";
 
 type CardCommentsProps = {
   content: string;
@@ -32,7 +33,7 @@ export const CardComments = ({
 }: CardCommentsProps) => {
   const { uiEvents, comments } = useSelector((state: any) => state);
   const { commentId } = comments;
-  const { isReplyOpen } = uiEvents;
+  const { isReplyOpen, editComment } = uiEvents;
   return (
     <>
       <ModalComments typeComment={"comment"} />
@@ -50,7 +51,14 @@ export const CardComments = ({
             action={<MenuButtons cardId={cardId} username={user.username} />}
           />
           <CardContent>
-            <Typography variant="body2">{content}</Typography>
+            <CardShowContent
+              content={content}
+              isEditComment={editComment}
+              commentId={commentId}
+              cardId={cardId}
+              buttonName="UPDATE"
+              typeContent="comment"
+            />
           </CardContent>
         </Box>
       </Card>
