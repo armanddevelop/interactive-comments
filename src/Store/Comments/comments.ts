@@ -72,8 +72,14 @@ export const commentsSlice = createSlice({
     },
 
     onDeleteComment: (state, { payload }) => {
-      const { id: cardId, typeComment } = payload;
-      if (typeComment === "comment") {
+      const { id: cardId } = payload;
+      let isComment: boolean = false;
+      state.comments.forEach((comment) => {
+        if (cardId === comment.id) {
+          isComment = "replies" in comment;
+        }
+      });
+      if (isComment) {
         state.comments = state.comments.filter(({ id }) => id !== cardId);
         sessionStorage.setItem("stateInitial", JSON.stringify(state));
       } else {
