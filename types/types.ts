@@ -38,3 +38,21 @@ export type stateComments = {
     comments: Array<TComments>;
   };
 };
+export type commentEdit = {
+  comment: string;
+  commentIdToEdit: string;
+  typeContent: string;
+};
+
+export type CommentInfoToDelete = {
+  id: string;
+  typeComment: string;
+};
+
+export type CommentInfo = {
+  id: string;
+  dateCreation: string;
+  comment: string;
+  typeComment: string;
+  replyingTo?: string;
+};

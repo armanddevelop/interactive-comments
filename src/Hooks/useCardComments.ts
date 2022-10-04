@@ -3,6 +3,11 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
+  commentEdit,
+  CommentInfoToDelete,
+  CommentInfo,
+} from "../../types/types";
+import {
   onCrateNewComment,
   onDeleteComment,
   onEditComment,
@@ -15,25 +20,6 @@ import {
   onSetTypeComment,
   onsetEditComment,
 } from "../Store/UI/uiEvents";
-
-type CommentInfoToDelete = {
-  id: string;
-  typeComment: string;
-};
-
-type CommentInfo = {
-  id: string;
-  dateCreation: string;
-  comment: string;
-  typeComment: string;
-  replyingTo?: string;
-};
-
-type commentEdit = {
-  comment: string;
-  commentIdToEdit: string;
-  typeContent: string;
-};
 
 export const useCardComments = () => {
   const dispatch = useDispatch();
